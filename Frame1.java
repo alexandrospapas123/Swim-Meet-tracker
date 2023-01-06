@@ -1,4 +1,5 @@
 
+
 import java.awt.*; 
 import javax.swing.*;
 import java.awt.event.*;
@@ -19,7 +20,7 @@ public class Frame1 extends JFrame implements ActionListener
     // Construct an ImageIcon from an image filename
    String imgFilename = "";
       // Can use an absolute filename such as "c:/project/images/nought.gif"
-   ImageIcon icon = new ImageIcon("C:/Users/guska/OneDrive/Υπολογιστής/North-Broward-Preparatory-School-Logo2.jpg");
+   ImageIcon icon = new ImageIcon("NBP_logo.jpeg");
 // OR
 // Construct an ImageIcon via an image URL (in the form of file://path/filename)
    icon = null;
@@ -67,41 +68,23 @@ public class Frame1 extends JFrame implements ActionListener
     setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
   }
  
-public void actionPerformed( ActionEvent ev)//Listener
-  {
+  public void actionPerformed( ActionEvent ev)//Listener
+   {
    String action = ev.getActionCommand();   
    if (action.equals("North Broward Prep Games")){
       System.out.println("press 1 to confirm");
-      setCOUNT(1);}
+   }
    else if (action.equals("Swim Categories")){
       System.out.println("press 2 to confirm");
-      setCOUNT(2);}
+      }
    else if(action.equals("Data Analytics")){
        System.out.println("press 3 to confirm");       
-      setCOUNT(3);}
+      }
    else if(action.equals("Swimmer Performance")){
        System.out.println("press 4 to confirm");
-       setCOUNT(4);}
+       }
    else{    
        System.exit( 0 );}
     }
-    
-    public void buttonClick(ActionEvent event)
-    {
-    
-   String action1 = event.getActionCommand();   
-   if (action1.equals("North Broward Prep Games")){
-      COUNT=1;}
-   else if (action1.equals("Swim Categories")){
-      COUNT=2;}
-   else if(action1.equals("Data Analytics")){      
-      COUNT=3;}
-   else if(action1.equals("Swimmer Performance")){
-      COUNT=4;}
-   //myLabel.setText(Integer.toString(COUNT));
-   }
-public void setCOUNT(int x){
-    this.COUNT=x;}
-public int getCOUNT( ){
-    return COUNT;}
 }
+    
