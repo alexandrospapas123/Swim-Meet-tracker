@@ -1,9 +1,4 @@
-/**
- * Swimmer class. Each swimmer has atributes name, grade (9 to 12),
- * gender and performance for each event (12 events) and each category (12 cat)
- * performance is an object which encapsulates the time and points record of the swimmer 
- * per category and event
- */
+
 
 public class Swimmer
 {

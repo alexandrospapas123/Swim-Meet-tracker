@@ -1,5 +1,3 @@
-
-
 import java.awt.*; 
 import javax.swing.*;
 import java.awt.event.*;
@@ -10,7 +8,7 @@ public class Frame1 extends JFrame implements ActionListener
   JButton c ;
   JButton d ;
   JButton e ;
-  private int COUNT;
+  public int ButtonValue;
   
   // constructor for ButtonFrame
   Frame1(String title) 
@@ -20,7 +18,7 @@ public class Frame1 extends JFrame implements ActionListener
     // Construct an ImageIcon from an image filename
    String imgFilename = "";
       // Can use an absolute filename such as "c:/project/images/nought.gif"
-   ImageIcon icon = new ImageIcon("NBP_logo.jpeg");
+   ImageIcon icon = new ImageIcon("North-Broward-Preparatory-School-Logo2.jpg");
 // OR
 // Construct an ImageIcon via an image URL (in the form of file://path/filename)
    icon = null;
@@ -29,7 +27,7 @@ public class Frame1 extends JFrame implements ActionListener
       // Filename always relative to the root of the project (i.e., bin)
       // can access resource in a JAR file
    if (imgURL != null) {
-       icon = new ImageIcon("NBP_logo.jpeg");}
+       icon = new ImageIcon("North-Broward-Preparatory-School-Logo2.jpg");}
  else {
        System.err.println("Couldn't find file: " + imgFilename);
  }
@@ -72,19 +70,18 @@ public class Frame1 extends JFrame implements ActionListener
    {
    String action = ev.getActionCommand();   
    if (action.equals("North Broward Prep Games")){
-      System.out.println("press 1 to confirm");
+      ButtonValue=1;
    }
    else if (action.equals("Swim Categories")){
-      System.out.println("press 2 to confirm");
+      ButtonValue=2;
       }
    else if(action.equals("Data Analytics")){
-       System.out.println("press 3 to confirm");       
+      ButtonValue=3;      
       }
    else if(action.equals("Swimmer Performance")){
-       System.out.println("press 4 to confirm");
+       ButtonValue=4;
        }
    else{    
        System.exit( 0 );}
     }
 }
-    
