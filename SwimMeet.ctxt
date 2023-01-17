@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=SwimMeet
+comment1.params=
+comment1.target=SwimMeet()
+comment2.params=category
+comment2.target=void\ addCategory(java.lang.String)
+comment3.params=time
+comment3.target=void\ addTime(double)
+comment4.params=name
+comment4.target=void\ addName(java.lang.String)
+comment5.params=swimmer
+comment5.target=void\ addSwimmer(Swimmer)
+comment6.params=index\ swimmer
+comment6.target=void\ editSwimmer(int,\ Swimmer)
+comment7.params=index
+comment7.target=void\ deleteSwimmer(int)
+numComments=8
