@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=GameList
+comment1.params=homeTeam\ visitingTeam\ events
+comment1.target=GameList(java.lang.String,\ java.lang.String,\ java.util.List)
+comment2.params=
+comment2.target=java.lang.String\ getHomeTeam()
+comment3.params=homeTeam
+comment3.target=void\ setHomeTeam(java.lang.String)
+comment4.params=
+comment4.target=java.lang.String\ getVisitingTeam()
+comment5.params=visitingTeam
+comment5.target=void\ setVisitingTeam(java.lang.String)
+comment6.params=
+comment6.target=java.util.List\ getEvents()
+comment7.params=events
+comment7.target=void\ setEvents(java.util.List)
+comment8.params=event
+comment8.target=void\ addEvent(Event)
+comment9.params=event
+comment9.target=void\ removeEvent(Event)
+numComments=10
