@@ -1,26 +1,33 @@
+import java.awt.Font;
+import java.awt.Color;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*; 
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
+//import org.apache.poi.ss.usermodel.*;    
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.*;
-import java.awt.*; 
+//import java.awt.*; 
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.JOptionPane;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Iterator;
-
-import org.apache.poi.xssf.usermodel.*;
-
 
 public class Tracker extends JFrame{
   private JButton a ; // reference to the button object
@@ -131,157 +138,69 @@ public class Tracker extends JFrame{
          choice2 = Integer.parseInt(Choice);}
      return choice2;}
     
+    //public static int handleButtonPress(int value) {
+        //buttonPressValue = value;
+    //
+    //public interface ButtonCallback {
+        //void onButtonPress(int buttonNumber);
+    //}
     public static void main(String[] args) throws IOException
     {
-        // declare and initialize the variables
-        String test1, test2, test3,line;
-        double average=0;
-        String name;
-        FileReader fr = new FileReader("swimmers.txt");
-        Scanner inFile = new Scanner(fr);
-        PrintWriter outFile = new PrintWriter("testavg.txt");
-        while (inFile.hasNext())
-        {
-         name = inFile.next()+inFile.next();
-         
-         outFile.println("Student Name: " + name);
-         test1 = inFile.next();
-         test2 = inFile.next();
-         test3 = inFile.next();
-         System.out.println(name+"   "+test1+"   "+test2+"   "+test3);       
-         average = (Double.parseDouble(test1) + Double.parseDouble(test2) + Double.parseDouble(test3))/ 3.0;
-         System.out.println("Average test score:"+average);
-          try{                                                                         
-          outFile.println("Test scores: "+test1+"  "+test2+"  "+test3); 
-          outFile.println("Average test score: "+ average);}
-          catch (Exception e){}
-          outFile.println();
-           
-        }
-        inFile.close();
-        outFile.close();
-        FileReader fr1 = new FileReader("testavg.txt");
-        Scanner inFile1 = new Scanner(fr1);
-         while (inFile1.hasNext())
-        {
-         line = inFile1.nextLine();
-         System.out.println(line);}
-        inFile1.close();
-        System.out.println("Swim Meet Tracker");
+        final int N=4, M=33, P=2,i,k,l,m;
+        final Event [][][]events=new Event [N][M][P];
+        final Event [][][]newevents=new Event [2][M][P];
+        final ReadInitialEcxelFile rcc = new ReadInitialEcxelFile();
+        final NewExcelFile rcc1 = new NewExcelFile();
+        //System.out.println("Swim Meet Tracker");
         Tracker frm = new Tracker(new ButtonCallback() {
             @Override
             public void onButtonPress(int buttonNumber) {
-                System.out.println("Button " + buttonNumber + " pressed");
+                //System.out.println("Button " + buttonNumber + " pressed");
                 done = true;
                 if (buttonNumber == 1){
                    int choice1 = InputYourChoice();
-                        Athlete athlete1 = new Athlete("John Doe", 12, "Male");
-                        Athlete athlete2 = new Athlete("Jane Smith", 11, "Female");
-        
-                        // Create Event objects
-                        Event event1 = new Event("200 M.R.", "NBP", 122.3, 1, 15, athlete1);
-                        Event event2 = new Event("200 FR", "NBP", 124.8, 3, 20, athlete2);
-
-                        // Add events to a list
-                        List<Event> eventList = new ArrayList<>();
-                        eventList.add(event1);
-                        eventList.add(event2);
-                        // Create MeetScoreSheet object
-                        GameList scoreSheet = new GameList("NBP", "", eventList);
-                        if (choice1==1){
-                           // Add an event to the MeetScoreSheet's event list
-                            Event event3 = new Event("50 FR", "NBP", 61.2, 2, 10, athlete1);
-                            scoreSheet.addEvent(event3);}
-                       else if (choice1==2){ 
+                   Event [][][] events = rcc.InputFromExcelFile();
+                   Event [][][] newevents = rcc1.InputFromExcelFile();
+                   if (choice1==1){
+                       int NumberOfSheets=2;
+                       for (int k=0;k<N;k++){  
+                            for (int i=0;i<M;i++){
+                                for (int j=0;j<2;j++){
+                                    events[k+NumberOfSheets][i][j]=newevents[k][i][j];}}}}
+                   else if (choice1==2){ 
                         // Remove an event from the MeetScoreSheet's event list
-                           scoreSheet.removeEvent(event2);
+                           //scoreSheet.removeEvent(event2);
 
                         //Print the events in the MeetScoreSheet's event list
                         
                     }
                    else{
-                     for (Event e : scoreSheet.getEvents()) {
-                                System.out.println("Event: " + e.getEvent() + " Athlete: " + e.getAthlete().getName());
+                       for(int l=0;l<N;l++){
+                                    System.out.println(" ");
+                                    System.out.println(" ");
+                                    System.out.println(events[l][0][0].getDateSchool());
+                                    System.out.println(" ");
+                                    System.out.println(" ");
+                            for(int m=0;m<M;m++){
+                                if (m%3==0){ 
+                                    System.out.println(" ");
+                                    System.out.println(" "); 
+                                    System.out.println("Game num    "+events[l][m][0].getGameNum()+"  "+events[l][m][0].getEvent()+"  ");}
+                                System.out.println(events[l][m][0].getName()+"  "+events[l][m][0].getLane()+"  "+events[l][m][0].getTime());
+                                System.out.println(events[l][m][1].getName()+"  "+events[l][m][1].getLane()+"  "+events[l][m][1].getTime());}}
                         }  
                    }
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                   
-                   
-                   
-                   
-                   
-                   
-                   
-                   
-                   
-                }
-                
-                
-                
-                
-                
-                
-                
-                
-            }
-        });
-        frm.setSize( 1000, 1000 );
-        frm.setVisible( true );
+                else if (buttonNumber==2){
+                        JFrame frm = new JFrame();
+                        frm.setSize( 1000, 1000 );
+                        frm.setVisible( true );
+                        SwimMeet meet = new SwimMeet();
+                        String firstName = " ";
+                        String lastName = " ";
+                        double time=0.0;
+                        MyFrame f = new MyFrame(); }
+                }  
+            });
        
-        
-        
-        
-        
-        SwimMeet meet = new SwimMeet();
-        String firstName = " ";
-        String lastName = " ";
-        String gender = " ";
-        int yearGroup=0;
-        double time=0.0;
-        // Read in the categories from a file
-        //FileReader fr2 = new FileReader("categories.txt");
-        //Scanner inFile2 = new Scanner(fr2);
-        //while (inFile2.hasNext()) {
-            //meet.addCategory(inFile2.nextLine());
-        //}
-        //inFile.close();
-        
-        // Read in the swimmers from a file
-        fr = new FileReader("swimmers.txt");
-        inFile = new Scanner(fr);
-        while (inFile.hasNext()) {
-            try{
-            firstName = inFile.next();
-            lastName = inFile.next();
-            gender = inFile.next(); 
-            yearGroup = inFile.nextInt();
-            time=inFile.nextDouble();}
-            catch (Exception e){}
-            meet.addSwimmer(new Swimmer(firstName, lastName, gender, yearGroup,time));
-        }
-        inFile.close();
-
-        // Print out the names of all the swimmers in the meet
-        System.out.println("Swimmers:");
-        for (Swimmer s : meet.swimmers) {
-            System.out.println(s.getFirstName() + " " + s.getLastName());
-        }
-        
-        // Write the times for each swimmer to a file
-         PrintWriter fw = new  PrintWriter("swimmer_times.txt");
-        for (Swimmer s : meet.swimmers) {
-            fw.write(s.getFirstName() + " " + s.getLastName());
-            fw.write(Double.toString(s.getTimes()));
-            fw.write("\n");
-        }
-        fw.close();
-        MyFrame f = new MyFrame();
     }
 }
