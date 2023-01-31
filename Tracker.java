@@ -146,27 +146,50 @@ public class Tracker extends JFrame{
     //}
     public static void main(String[] args) throws IOException
     {
-        final int N=4, M=33, P=2,i,k,l,m;
+        final int N=2, M=33, P=2,i,k,l,m;
         final Event [][][]events=new Event [N][M][P];
-        final Event [][][]newevents=new Event [2][M][P];
+        final Event []events1=new Event [N*M*P];
+        final Event [][][]newevents=new Event [N][M][P];
+        final Event []events2=new Event [N*M*P];
         final ReadInitialEcxelFile rcc = new ReadInitialEcxelFile();
         final NewExcelFile rcc1 = new NewExcelFile();
-        //System.out.println("Swim Meet Tracker");
         Tracker frm = new Tracker(new ButtonCallback() {
             @Override
             public void onButtonPress(int buttonNumber) {
                 //System.out.println("Button " + buttonNumber + " pressed");
                 done = true;
+                //List<Event[]> eventsList = new ArrayList<>();
+                //ArrayList<Event> eventsList = new ArrayList<>(Arrays.asList(eventArray));
                 if (buttonNumber == 1){
                    int choice1 = InputYourChoice();
                    Event [][][] events = rcc.InputFromExcelFile();
-                   Event [][][] newevents = rcc1.InputFromExcelFile();
+                   int m=0;
+                   for ( int k=0; k<N; k++) {
+                        for (int i=0; i<M; i++) {
+                            for (int j=0; j< P; j++) {
+                                    events1[m]=events[k][i][j];
+                                    m++;}}}
+                  ArrayList<Event> eventsList = new ArrayList<>(Arrays.asList(events1));
+                  for (int i = 0; i < m; i++) {
+                        Event event = eventsList.get(i);
+                        eventsList.add(event);
+                        System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                        System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}
+
                    if (choice1==1){
-                       int NumberOfSheets=2;
-                       for (int k=0;k<N;k++){  
-                            for (int i=0;i<M;i++){
-                                for (int j=0;j<2;j++){
-                                    events[k+NumberOfSheets][i][j]=newevents[k][i][j];}}}}
+                       Event [][][] newevents = rcc1.InputFromExcelFile();
+                       
+                   m=0;
+                   for ( int k=0; k<N; k++) {
+                        for (int i=0; i<M; i++) {
+                            for (int j=0; j< P; j++) {
+                                    events2[m]=newevents[k][i][j];
+                                    m++;}}}
+                      for (int i = m; i < 2*m; i++) {
+                        Event event = eventsList.get(i);
+                        eventsList.add(event);
+                        System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                        System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}}
                    else if (choice1==2){ 
                         // Remove an event from the MeetScoreSheet's event list
                            //scoreSheet.removeEvent(event2);
@@ -181,15 +204,15 @@ public class Tracker extends JFrame{
                                     System.out.println(events[l][0][0].getDateSchool());
                                     System.out.println(" ");
                                     System.out.println(" ");
-                            for(int m=0;m<M;m++){
+                            for( m=0;m<M;m++){
                                 if (m%3==0){ 
                                     System.out.println(" ");
                                     System.out.println(" "); 
                                     System.out.println("Game num    "+events[l][m][0].getGameNum()+"  "+events[l][m][0].getEvent()+"  ");}
                                 System.out.println(events[l][m][0].getName()+"  "+events[l][m][0].getLane()+"  "+events[l][m][0].getTime());
                                 System.out.println(events[l][m][1].getName()+"  "+events[l][m][1].getLane()+"  "+events[l][m][1].getTime());}}
-                        }  
-                   }
+                        }
+                    }  
                 else if (buttonNumber==2){
                         JFrame frm = new JFrame();
                         frm.setSize( 1000, 1000 );
