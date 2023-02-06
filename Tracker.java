@@ -146,13 +146,14 @@ public class Tracker extends JFrame{
     //}
     public static void main(String[] args) throws IOException
     {
-        final int N=2, M=33, P=2,i,k,l,m;
+        final int N=4, M=33, P=2,i,k,l,m,GameNum=0, targetGame;
         final Event [][][]events=new Event [N][M][P];
         final Event []events1=new Event [N*M*P];
-        final Event [][][]newevents=new Event [N][M][P];
-        final Event []events2=new Event [N*M*P];
+        final Event [][][]newevents=new Event [2][M][P];
+        final Event []events2=new Event [2*M*P];
         final ReadInitialEcxelFile rcc = new ReadInitialEcxelFile();
         final NewExcelFile rcc1 = new NewExcelFile();
+        final String choice; 
         Tracker frm = new Tracker(new ButtonCallback() {
             @Override
             public void onButtonPress(int buttonNumber) {
@@ -160,59 +161,78 @@ public class Tracker extends JFrame{
                 done = true;
                 //List<Event[]> eventsList = new ArrayList<>();
                 //ArrayList<Event> eventsList = new ArrayList<>(Arrays.asList(eventArray));
+             while (done==true){
                 if (buttonNumber == 1){
-                   int choice1 = InputYourChoice();
+                   
                    Event [][][] events = rcc.InputFromExcelFile();
                    int m=0;
                    for ( int k=0; k<N; k++) {
-                        for (int i=0; i<M; i++) {
-                            for (int j=0; j< P; j++) {
+                        for (int i=0; i<33; i++) {
+                            for (int j=0; j< 2; j++) {
+                                    events[k][i][j].setGameNum((k+2)/2);
                                     events1[m]=events[k][i][j];
                                     m++;}}}
                   ArrayList<Event> eventsList = new ArrayList<>(Arrays.asList(events1));
-                  for (int i = 0; i < m; i++) {
+                  
+                  for (int i =0; i < N*M*P; i++) {
                         Event event = eventsList.get(i);
                         eventsList.add(event);
-                        System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
-                        System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}
-
-                   if (choice1==1){
-                       Event [][][] newevents = rcc1.InputFromExcelFile();
-                       
-                   m=0;
-                   for ( int k=0; k<N; k++) {
-                        for (int i=0; i<M; i++) {
-                            for (int j=0; j< P; j++) {
-                                    events2[m]=newevents[k][i][j];
-                                    m++;}}}
-                      for (int i = m; i < 2*m; i++) {
-                        Event event = eventsList.get(i);
-                        eventsList.add(event);
-                        System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
-                        System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}}
-                   else if (choice1==2){ 
-                        // Remove an event from the MeetScoreSheet's event list
-                           //scoreSheet.removeEvent(event2);
-
-                        //Print the events in the MeetScoreSheet's event list
-                        
+                        //System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                        //System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}
                     }
+                  int choice1 = InputYourChoice();
+                   if (choice1==1){
+                       Event [][][] newevents = rcc1.InputFromNewExcelFile();    
+                       int o=0;
+                       for ( int k=0; k<2; k++) {
+                         for (int i=0; i<M; i++) {
+                            for (int j=0; j< P; j++) {
+                                    newevents[k][i][j].setGameNum(N+1); 
+                                    events2[o]=newevents[k][i][j];
+                                    o++;}}}
+                        ArrayList<Event> eventsList1 = new ArrayList<>(Arrays.asList(events2)); 
+                        for (int i =0; i <o; i++) {
+                          Event event = eventsList1.get(i);
+                          eventsList1.add(event);
+                          //System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                          //System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}
+                        }
+                          eventsList.addAll(eventsList1);}
+                   else if (choice1==2){ 
+                            System.out.println("Which game number to delete? ");
+                            int targetGame = input.nextInt();
+                            Event targetEvent = null;
+                            for (Event event : eventsList) {
+                                  if (event.getGameNum() == targetGame) {
+                                         targetEvent = event;
+                                         break;
+                                  }
+                               }
+                             if (targetEvent != null) {
+                                      System.out.println(targetEvent.getGameNum() + " was found in the list and will be removed from the list ");
+                                      eventsList.remove(targetEvent);
+                            } else {
+                                      System.out.println("Number:    "+targetGame+"   game was not found in the list");
+                                    }
+                               }                       
                    else{
-                       for(int l=0;l<N;l++){
+                            System.out.println("Which game do you want to see? ");
+                            int targetGame = input.nextInt();
+                            int L=targetGame*2-2;
+                            for(int l=L;l<L+2;l++){
                                     System.out.println(" ");
                                     System.out.println(" ");
                                     System.out.println(events[l][0][0].getDateSchool());
                                     System.out.println(" ");
                                     System.out.println(" ");
                             for( m=0;m<M;m++){
-                                if (m%3==0){ 
+                               if (m%3==0){ 
                                     System.out.println(" ");
                                     System.out.println(" "); 
                                     System.out.println("Game num    "+events[l][m][0].getGameNum()+"  "+events[l][m][0].getEvent()+"  ");}
-                                System.out.println(events[l][m][0].getName()+"  "+events[l][m][0].getLane()+"  "+events[l][m][0].getTime());
-                                System.out.println(events[l][m][1].getName()+"  "+events[l][m][1].getLane()+"  "+events[l][m][1].getTime());}}
-                        }
-                    }  
+                               System.out.println(events[l][m][0].getName()+"  "+events[l][m][0].getLane()+"  "+events[l][m][0].getTime());
+                               System.out.println(events[l][m][1].getName()+"  "+events[l][m][1].getLane()+"  "+events[l][m][1].getTime());}}
+                        }}  
                 else if (buttonNumber==2){
                         JFrame frm = new JFrame();
                         frm.setSize( 1000, 1000 );
@@ -222,7 +242,12 @@ public class Tracker extends JFrame{
                         String lastName = " ";
                         double time=0.0;
                         MyFrame f = new MyFrame(); }
-                }  
+                System.out.println("If you want to continue press Y");
+                String choice = input.nextLine();
+                if (choice.equals("Y")){done=true;}
+                else{done=false;}
+            }
+                 }
             });
        
     }

@@ -1,8 +1,0 @@
-Student Name: AlexPapas
-Test scores: 10.51  17.20  18.00
-Average test score: 15.236666666666666
-
-Student Name: ArisPapas
-Test scores: 11.22  13.45  14.00
-Average test score: 12.89
-

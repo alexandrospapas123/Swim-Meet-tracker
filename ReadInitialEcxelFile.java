@@ -6,12 +6,13 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Sheet;  
 import org.apache.poi.ss.usermodel.Workbook;  
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.swing.JFileChooser;
   
 public class ReadInitialEcxelFile   
 {  
 public static  Event[][][] InputFromExcelFile(  ){     
 ReadInitialEcxelFile rc=new ReadInitialEcxelFile();     
- 
+int NumberOfGames=4; 
 int k =0,l=0,M=33,P=2,h;
 int i,j,t2, rows=40, col = 13;
 int row,cols, TempLane,TempLane1, GameNum;
@@ -19,7 +20,6 @@ double TempTime,t1;
 double [] times = new double[6];
 int []place = new int [6];
 int pl, score;
-int NumberOfGames=2;
 int NumberOfEvents=33;
 int N = NumberOfGames;
 int E = NumberOfEvents;
@@ -46,7 +46,7 @@ for (k=0;k<N;k++){
         Tempt=rc.ReadCellNumData(h,5,k);
         TempTime = Tempt;
         DateSchool=date+"       "+"NBG vs "+schools+"  "+gender;
-        GameNum=(k+2)/2;
+        GameNum=NumberOfGames/2;
         events[k][i][0]=new Event(TempName,event,TempLane,TempTime,DateSchool, GameNum); 
         pl=0;
         score=0;
@@ -87,7 +87,18 @@ public String ReadCellData(int vRow, int vColumn, int shiit)
     String value = null;
     Workbook wb = null;
     try {
-        FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Excel Reader Test/NB Excel Test.xlsx");
+        //JFileChooser j = new JFileChooser();
+ 
+        // Open the save dialog
+    
+        
+        // while (j.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
+            // java.io.File f = j.getSelectedFile();
+            // System.err.println(f.getPath());
+        // }
+        
+        //FileInputStream fis = new FileInputStream(j.getSelectedFile().getPath());
+         FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Swim Meet Tracker/Βιβλίο2.xlsx");
         wb = new XSSFWorkbook(fis);
         Sheet sheet = wb.getSheetAt(shiit);    
         Row row = sheet.getRow(vRow);
@@ -109,7 +120,7 @@ public String ReadCellData(int vRow, int vColumn, int shiit)
     double value = 0.0;
     Workbook wb = null;
     try {
-        FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Excel Reader Test/NB Excel Test.xlsx");
+        FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Swim Meet Tracker/Βιβλίο copy.xlsx");
         wb = new XSSFWorkbook(fis);
         Sheet sheet = wb.getSheetAt(shiit);    
         Row row = sheet.getRow(vRow);
