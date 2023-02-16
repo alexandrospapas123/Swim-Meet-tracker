@@ -146,94 +146,116 @@ public class Tracker extends JFrame{
     //}
     public static void main(String[] args) throws IOException
     {
-        final int N=4, M=33, P=2,i,k,l,m,GameNum=0, targetGame;
-        final Event [][][]events=new Event [N][M][P];
-        final Event []events1=new Event [N*M*P];
-        final Event [][][]newevents=new Event [2][M][P];
-        final Event []events2=new Event [2*M*P];
-        final ReadInitialEcxelFile rcc = new ReadInitialEcxelFile();
+        int NumberOfSheets=6, M=33, P=2,i,j,k,l,m,GameNum=0, targetGame;
+        int N=NumberOfSheets;
+        Event[][][] events = new Event[N][M][P];
+        Event[] events1 = new Event[N*M*P];
+        final Event[][][] newevents = new Event[2][M][P];
+        final Event[] events2 = new Event[2*M*P];
+        ReadInitialEcxelFile rcc = new ReadInitialEcxelFile();
         final NewExcelFile rcc1 = new NewExcelFile();
-        final String choice; 
-        Tracker frm = new Tracker(new ButtonCallback() {
+        String choice = "Y";
+        events = rcc.InputFromExcelFile();
+        int NSH= events.length;
+        m = 0;
+        List<Event> eventsList = new ArrayList<>();
+        for (i = 0; i < events.length; i++) {
+            for (j = 0; j < events[i].length; j++) {
+                for (k = 0; k < events[i][j].length; k++) {
+                    eventsList.add(events[i][j][k]);
+                 }
+            }
+        }
+
+        for (i = 0; i < eventsList.size(); i++) {
+                                Event event = eventsList.get(i);
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                                System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());
+                            }
+            
+        do {
+            Tracker frm = new Tracker(new ButtonCallback() {
             @Override
             public void onButtonPress(int buttonNumber) {
-                //System.out.println("Button " + buttonNumber + " pressed");
-                done = true;
-                //List<Event[]> eventsList = new ArrayList<>();
-                //ArrayList<Event> eventsList = new ArrayList<>(Arrays.asList(eventArray));
-             while (done==true){
-                if (buttonNumber == 1){
-                   
-                   Event [][][] events = rcc.InputFromExcelFile();
-                   int m=0;
-                   for ( int k=0; k<N; k++) {
-                        for (int i=0; i<33; i++) {
-                            for (int j=0; j< 2; j++) {
-                                    events[k][i][j].setGameNum((k+2)/2);
-                                    events1[m]=events[k][i][j];
-                                    m++;}}}
-                  ArrayList<Event> eventsList = new ArrayList<>(Arrays.asList(events1));
-                  
-                  for (int i =0; i < N*M*P; i++) {
-                        Event event = eventsList.get(i);
-                        eventsList.add(event);
-                        //System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
-                        //System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}
-                    }
-                  int choice1 = InputYourChoice();
+                System.out.println("Button " + buttonNumber + " pressed");
+                //done = true;
+              if (buttonNumber == 1){
+                   int choice1 = InputYourChoice();
                    if (choice1==1){
                        Event [][][] newevents = rcc1.InputFromNewExcelFile();    
                        int o=0;
-                       for ( int k=0; k<2; k++) {
-                         for (int i=0; i<M; i++) {
-                            for (int j=0; j< P; j++) {
-                                    newevents[k][i][j].setGameNum(N+1); 
-                                    events2[o]=newevents[k][i][j];
-                                    o++;}}}
-                        ArrayList<Event> eventsList1 = new ArrayList<>(Arrays.asList(events2)); 
-                        for (int i =0; i <o; i++) {
-                          Event event = eventsList1.get(i);
-                          eventsList1.add(event);
-                          //System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
-                          //System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());}
+                       List<Event> eventsList1 = new ArrayList<>();
+                      for (int i = 0; i < newevents.length; i++) {
+                            for (int j = 0; j < newevents[i].length; j++) {
+                                for (int k = 0; k < newevents[i][j].length; k++) {
+                                    eventsList1.add(newevents[i][j][k]);
+                                 }
+                            }
                         }
-                          eventsList.addAll(eventsList1);}
+                        int GN=(eventsList.size()/(2*66)+1);
+                        for (int i =0; i <eventsList1.size(); i++) {
+                          Event event = eventsList1.get(i);
+                          event.setGameNum(GN);
+                          //System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                          //System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime()); 
+                          //eventsList1.add(event);
+                          }
+                          eventsList.addAll(eventsList1);
+                         
+                          for (int i = 0; i < eventsList1.size(); i++) {
+                                Event event = eventsList1.get(i);
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                                System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());
+                            }  
+                        }
                    else if (choice1==2){ 
-                            System.out.println("Which game number to delete? ");
+                          System.out.println("Which game number to delete?");
+                            try {
+                                int targetGame = input.nextInt();
+                                Iterator<Event> iterator = eventsList.iterator();
+                                while (iterator.hasNext()) {
+                                    Event event = iterator.next();
+                                    if (event.getGameNum() == targetGame) {
+                                        iterator.remove();
+                                        System.out.println(event.getGameNum() + " was found in the list and will be removed from the list");
+                                    }
+                                }
+                                if (eventsList.isEmpty()) {
+                                    System.out.println("List is now empty.");
+                                } else {
+                                    System.out.println("All events with game number " + targetGame + " have been deleted from the list.");
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Invalid input. Please enter a valid integer.");
+                            }
+ 
+                               } 
+                   else{
+                            System.out.println("Which game do you want to see? ");
                             int targetGame = input.nextInt();
                             Event targetEvent = null;
                             for (Event event : eventsList) {
                                   if (event.getGameNum() == targetGame) {
                                          targetEvent = event;
-                                         break;
+                                         System.out.println("");
+                                         System.out.println("");
+                                         System.out.println("Game num " + event.getGameNum() + "  " + event.getEvent());
+                                         System.out.println(event.getName() + "  " + event.getLane() + "  " + event.getTime());
                                   }
                                }
                              if (targetEvent != null) {
-                                      System.out.println(targetEvent.getGameNum() + " was found in the list and will be removed from the list ");
-                                      eventsList.remove(targetEvent);
+                                      System.out.println(targetEvent.getGameNum() + " was found in the list ");
+                                      for(int i=1;i<=2*66;i++){  
+                                      eventsList.remove(targetEvent);}
                             } else {
                                       System.out.println("Number:    "+targetGame+"   game was not found in the list");
                                     }
-                               }                       
-                   else{
-                            System.out.println("Which game do you want to see? ");
-                            int targetGame = input.nextInt();
-                            int L=targetGame*2-2;
-                            for(int l=L;l<L+2;l++){
-                                    System.out.println(" ");
-                                    System.out.println(" ");
-                                    System.out.println(events[l][0][0].getDateSchool());
-                                    System.out.println(" ");
-                                    System.out.println(" ");
-                            for( m=0;m<M;m++){
-                               if (m%3==0){ 
-                                    System.out.println(" ");
-                                    System.out.println(" "); 
-                                    System.out.println("Game num    "+events[l][m][0].getGameNum()+"  "+events[l][m][0].getEvent()+"  ");}
-                               System.out.println(events[l][m][0].getName()+"  "+events[l][m][0].getLane()+"  "+events[l][m][0].getTime());
-                               System.out.println(events[l][m][1].getName()+"  "+events[l][m][1].getLane()+"  "+events[l][m][1].getTime());}}
-                        }}  
-                else if (buttonNumber==2){
+                        }}
+                 else if (buttonNumber==2){
                         JFrame frm = new JFrame();
                         frm.setSize( 1000, 1000 );
                         frm.setVisible( true );
@@ -241,14 +263,9 @@ public class Tracker extends JFrame{
                         String firstName = " ";
                         String lastName = " ";
                         double time=0.0;
-                        MyFrame f = new MyFrame(); }
+                        MyFrame f = new MyFrame(); }}});
                 System.out.println("If you want to continue press Y");
-                String choice = input.nextLine();
-                if (choice.equals("Y")){done=true;}
-                else{done=false;}
-            }
-                 }
-            });
-       
+                choice = input.nextLine(); 
+        }while (!(choice==("Y")));
     }
 }

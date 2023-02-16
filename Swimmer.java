@@ -1,53 +1,56 @@
 
+class Swimmer {
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private int yearGroup;
+    private double time;
 
-public class Swimmer
-{
-    
-    private String Name;
-    private String Grade;
-    private String Gender;
-    private Performance [][]perf;
-
-    /**
-     * Constructor for objects of class Swimmer
-     */
-    public Swimmer()
-    {
-        // initialise instance variables
-        this.Name = Name;
-        this.Grade = Grade;
-        this.Gender = Gender;
-        this.perf=perf;
+    public Swimmer(String firstName, String lastName, String gender, int yearGroup, double time) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.yearGroup = yearGroup;
+        this.time = time;
     }
 
-    public void setName(String newName){
-        this.Name=newName;
+    public String getFirstName() {
+        return firstName;
     }
-    public String getName( )
-    {
-        return Name;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    
-    public void setGrade(String newGrade){
-        this.Grade=newGrade;
+
+    public String getLastName() {
+        return lastName;
     }
-    public String getGrade( )
-    {
-        return Grade;
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
-    
-    public void setGender(String newGender){
-        this.Gender=newGender;
+
+    public String getGender() {
+        return gender;
     }
-    public String getGender( )
-    {
-        return Gender;
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
-    
-    public void setPerformance(Performance [][] newperf){
-        this.perf=newperf;
+
+    public int getYearGroup() {
+        return yearGroup;
     }
-    public Performance [][] getPerformance( ){
-        return perf;
-    }   
+
+    public void setYearGroup(int yearGroup) {
+        this.yearGroup = yearGroup;
+    }
+
+    public double getTimes() {
+        return time;
+    }
+
+    public void setTimes(double time) {
+        this.time = time;
+    }
 }

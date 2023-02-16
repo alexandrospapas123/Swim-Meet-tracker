@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;  
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
   
+
 public class NewExcelFile   
 {  
 public static  Event[][][] InputFromNewExcelFile(  ){     
@@ -46,7 +47,7 @@ for (k=0;k<N;k++){
         Tempt=rc.ReadCellNumData(h,5,k);
         TempTime = Tempt;
         DateSchool=date+"       "+"NBG vs "+schools+"  "+gender;
-        GameNum=2;
+        GameNum=(k+2)/2;
         events[k][i][0]=new Event(TempName,event,TempLane,TempTime,DateSchool, GameNum); 
         pl=0;
         score=0;
@@ -87,7 +88,7 @@ public String ReadCellData(int vRow, int vColumn, int shiit)
     String value = null;
     Workbook wb = null;
     try {
-        FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Swim Meet Tracker/Βιβλίο2.xlsx");
+        FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Swim Meet Tracker/NewGame.xlsx");
         wb = new XSSFWorkbook(fis);
         Sheet sheet = wb.getSheetAt(shiit);    
         Row row = sheet.getRow(vRow);
@@ -109,7 +110,7 @@ public String ReadCellData(int vRow, int vColumn, int shiit)
     double value = 0.0;
     Workbook wb = null;
     try {
-        FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Swim Meet Tracker/Βιβλίο2.xlsx");
+        FileInputStream fis = new FileInputStream("/Users/alexpap/GitHub/Swim Meet Tracker/NewGame.xlsx");
         wb = new XSSFWorkbook(fis);
         Sheet sheet = wb.getSheetAt(shiit);    
         Row row = sheet.getRow(vRow);
